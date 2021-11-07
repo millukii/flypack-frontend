@@ -33,7 +33,7 @@ import { WishList } from "./components/WishList.jsx";
 import { EditWishList } from "./components/EditWishList.jsx";
 import { CreateWishList } from "./components/CreateWishList.jsx";
 import { Dashboard } from "./components/Dashboard.jsx";
-import authProvider from './AuthProvider';
+import AuthProvider from './Auth.js';
 import LoginPage from './LoginPage';
 import LogoutButton from './LogoutButton';
 import LoginButton from './LoginButton';
