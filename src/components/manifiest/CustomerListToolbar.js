@@ -2,17 +2,16 @@ import {
   Box,
   Button,
   Card,
-  CardContent,
-  TextField,
-  InputAdornment,
-  SvgIcon
+  CardContent, InputAdornment,
+  SvgIcon, TextField
 } from '@material-ui/core';
 import { Search as SearchIcon } from 'react-feather';
 import { useNavigate } from 'react-router';
 
-const ShippingListToolbar = (props) => {
+const CustomerListToolbar = (props) => {
 
   const navigate = useNavigate();
+
   return <Box {...props}>
     <Box
       sx={{
@@ -20,21 +19,15 @@ const ShippingListToolbar = (props) => {
         justifyContent: 'flex-end'
       }}
     >
-      <Button>
-        Importar
-      </Button>
-      <Button sx={{ mx: 1 }}>
-        Exportar
-      </Button>
+
       <Button
-        onClick={() =>{
-          navigate('/app/shipping-new', { replace: true });
+        onClick={() => {
+          navigate('/app/customer-new', { replace: true });
         }}
         color="primary"
         variant="contained"
-        name="shipping-new"
       >
-        Armar envio
+        Add customer
       </Button>
     </Box>
     <Box sx={{ mt: 3 }}>
@@ -55,7 +48,7 @@ const ShippingListToolbar = (props) => {
                   </InputAdornment>
                 )
               }}
-              placeholder="Buscar envio"
+              placeholder="Search customer"
               variant="outlined"
             />
           </Box>
@@ -63,6 +56,6 @@ const ShippingListToolbar = (props) => {
       </Card>
     </Box>
   </Box>
-};
+}
 
-export default ShippingListToolbar;
+export default CustomerListToolbar;

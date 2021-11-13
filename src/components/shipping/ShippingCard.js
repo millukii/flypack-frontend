@@ -11,9 +11,16 @@ import {
 } from '@material-ui/core';
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import GetAppIcon from '@material-ui/icons/GetApp';
+import { useNavigate } from 'react-router-dom';
 
-const ShippingCard = ({ shipping, ...rest }) => (
-  <Card
+const ShippingCard = ({ shipping, ...rest }) => {
+  
+  const navigate = useNavigate();
+  const addPackages = () => {
+    navigate('/app/shipping-add-packages',shipping,{ replace: true });
+  }
+
+  return <Card
     sx={{
       display: 'flex',
       flexDirection: 'column',
@@ -85,6 +92,13 @@ const ShippingCard = ({ shipping, ...rest }) => (
            variant="contained"
           >
             Tracking
+       </Button>
+       <Button
+          onClick={addPackages}
+           color="info"
+           variant="contained"
+          >
+            Agregar Paquetes
        </Button>
         <Typography
         align="center"
@@ -176,7 +190,8 @@ const ShippingCard = ({ shipping, ...rest }) => (
       </Grid>
     </Box>
   </Card>
-);
+}
+  
 
 ShippingCard.propTypes = {
   shipping: PropTypes.object.isRequired

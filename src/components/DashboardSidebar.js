@@ -46,9 +46,19 @@ const items = [
     title: 'Ordenes de Compra'
   },
   {
+    href: '/app/packages',
+    icon: UsersIcon,
+    title: 'Paquetes de envios'
+  },
+  {
     href: '/app/shippings',
     icon: UsersIcon,
     title: 'Envios'
+  },
+    {
+    href: '/app/manifiests',
+    icon: UsersIcon,
+    title: 'Manifiestos'
   },
   {
     href: '/app/roundsman',

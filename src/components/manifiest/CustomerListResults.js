@@ -14,44 +14,43 @@ import {
 import PropTypes from 'prop-types';
 import { useState } from 'react';
 import PerfectScrollbar from 'react-perfect-scrollbar';
-import { deleteResource, editResource } from 'src/utils/api/resources';
+import { firebaseEliminar } from 'src/utils/FirebaseUtil';
 
-const OrderListResults = ({ orders, ...rest }) => {
-  console.log('Order', orders);
-  const [selectedOrderIds, setSelectedOrderIds] = useState([]);
+const CustomerListResults = ({ customers, ...rest }) => {
+  const [selectedCustomerIds, setSelectedCustomerIds] = useState([]);
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(0);
 
   const handleSelectAll = (event) => {
-    let newSelectedOrderIds;
+    let newSelectedCustomerIds;
 
     if (event.target.checked) {
-      newSelectedOrderIds = orders.map((order) => order.id);
+      newSelectedCustomerIds = customers.map((customer) => customer.id);
     } else {
-      newSelectedOrderIds = [];
+      newSelectedCustomerIds = [];
     }
 
-    setSelectedOrderIds(newSelectedOrderIds);
+    setSelectedCustomerIds(newSelectedCustomerIds);
   };
 
   const handleSelectOne = (event, id) => {
-    const selectedIndex = selectedOrderIds.indexOf(id);
-    let newSelectedOrderIds = [];
+    const selectedIndex = selectedCustomerIds.indexOf(id);
+    let newSelectedCustomerIds = [];
 
     if (selectedIndex === -1) {
-      newSelectedOrderIds = newSelectedOrderIds.concat(selectedOrderIds, id);
+      newSelectedCustomerIds = newSelectedCustomerIds.concat(selectedCustomerIds, id);
     } else if (selectedIndex === 0) {
-      newSelectedOrderIds = newSelectedOrderIds.concat(selectedOrderIds.slice(1));
-    } else if (selectedIndex === selectedOrderIds.length - 1) {
-      newSelectedOrderIds = newSelectedOrderIds.concat(selectedOrderIds.slice(0, -1));
+      newSelectedCustomerIds = newSelectedCustomerIds.concat(selectedCustomerIds.slice(1));
+    } else if (selectedIndex === selectedCustomerIds.length - 1) {
+      newSelectedCustomerIds = newSelectedCustomerIds.concat(selectedCustomerIds.slice(0, -1));
     } else if (selectedIndex > 0) {
-      newSelectedOrderIds = newSelectedOrderIds.concat(
-        selectedOrderIds.slice(0, selectedIndex),
-        selectedOrderIds.slice(selectedIndex + 1)
+      newSelectedCustomerIds = newSelectedCustomerIds.concat(
+        selectedCustomerIds.slice(0, selectedIndex),
+        selectedCustomerIds.slice(selectedIndex + 1)
       );
     }
 
-    setSelectedOrderIds(newSelectedOrderIds);
+    setSelectedCustomerIds(newSelectedCustomerIds);
   };
 
   const handleLimitChange = (event) => {
@@ -62,13 +61,7 @@ const OrderListResults = ({ orders, ...rest }) => {
     setPage(newPage);
   };
 
-  if (orders === undefined || orders === null) {
-    orders = [{
-      "id" : "1",
-    }]
-  }
   return (
-    
     <Card {...rest}>
       <PerfectScrollbar>
         <Box sx={{ minWidth: 1050 }}>
@@ -77,48 +70,42 @@ const OrderListResults = ({ orders, ...rest }) => {
               <TableRow>
                 <TableCell padding="checkbox">
                   <Checkbox
-                    checked={selectedOrderIds.length === orders.length}
+                    checked={selectedCustomerIds.length === customers.length}
                     color="primary"
                     indeterminate={
-                      selectedOrderIds.length > 0
-                      && selectedOrderIds.length < orders.length
+                      selectedCustomerIds.length > 0
+                      && selectedCustomerIds.length < customers.length
                     }
                     onChange={handleSelectAll}
                   />
                 </TableCell>
                 <TableCell>
-                  Orden Cliente
+                  Name
                 </TableCell>
                 <TableCell>
-                  Orden de Compra
+                  Business Identity 
                 </TableCell>
                 <TableCell>
-                  Cliente
+                  Email
                 </TableCell>
                 <TableCell>
-                  Tipo de Orden
-                </TableCell>
-                <TableCell>
-                  Estado
+                  Phone
                 </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {orders.slice(0, limit).map((order) => (
+              {customers.slice(0, limit).map((customer) => (
                 <TableRow
                   hover
-                  key={order.id}
-                  selected={selectedOrderIds.indexOf(order.id) !== -1}
+                  key={customer.businessId}
+                  selected={selectedCustomerIds.indexOf(customer.businessId) !== -1}
                 >
                   <TableCell padding="checkbox">
                     <Checkbox
-                      checked={selectedOrderIds.indexOf(order.id) !== -1}
-                      onChange={(event) => handleSelectOne(event, order.id)}
+                      checked={selectedCustomerIds.indexOf(customer.businessId) !== -1}
+                      onChange={(event) => handleSelectOne(event, customer.businessId)}
                       value="true"
                     />
-                  </TableCell>
-                  <TableCell>
-                    {order.customerOrderId}
                   </TableCell>
                   <TableCell>
                     <Box
@@ -131,23 +118,24 @@ const OrderListResults = ({ orders, ...rest }) => {
                         color="textPrimary"
                         variant="body1"
                       >
-                        {order.purchaseOrderId} 
+                        {customer.name} 
                       </Typography>
                     </Box>
                   </TableCell>
                   <TableCell>
-                    {order.customerEmailId}
+                    {customer.businessId}
                   </TableCell>
                   <TableCell>
-                    {order.orderType}
+                    {customer.email}
                   </TableCell>
                   <TableCell>
-                    {order.orderStatus}
+                    {customer.phone}
                   </TableCell>
+
                   <TableCell>
                     <Button
                       onClick={() => {
-                        deleteResource('orders', order.id)
+                        firebaseEliminar('clientes', customer.id)
                         window.location.reload(true);
                       }}
                       color="error"
@@ -156,18 +144,7 @@ const OrderListResults = ({ orders, ...rest }) => {
                       Eliminar
                     </Button>
                   </TableCell>
-                  <TableCell>
-                    <Button
-                      onClick={() => {
-                        editResource('orders', order.id)
-                        window.location.reload(true);
-                      }}
-                      color="info"
-                      variant="contained"
-                    >
-                      Aprobar
-                    </Button>
-                  </TableCell>
+
                 </TableRow>
               ))}
             </TableBody>
@@ -176,7 +153,7 @@ const OrderListResults = ({ orders, ...rest }) => {
       </PerfectScrollbar>
       <TablePagination
         component="div"
-        count={orders.length}
+        count={customers.length}
         onPageChange={handlePageChange}
         onRowsPerPageChange={handleLimitChange}
         page={page}
@@ -187,8 +164,8 @@ const OrderListResults = ({ orders, ...rest }) => {
   );
 };
 
-OrderListResults.propTypes = {
-  orders: PropTypes.array.isRequired
+CustomerListResults.propTypes = {
+  customers: PropTypes.array.isRequired
 };
 
-export default OrderListResults;
+export default CustomerListResults;

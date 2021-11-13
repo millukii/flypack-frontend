@@ -13,6 +13,7 @@ import { useEffect, useState } from 'react';
 
 const ITEMS_PER_PAGE = 6;
 const ShippingList = () => {
+
   const [shippings, setShippings] = useState([])
   useEffect(() => {
     searchShippings()
@@ -41,7 +42,9 @@ const ShippingList = () => {
             container
             spacing={3}
           >
-            {shippings.map((shipping) => (
+            {
+            shippings.map((shipping) => (
+            
               <Grid
                 item
                 key={shipping.id}

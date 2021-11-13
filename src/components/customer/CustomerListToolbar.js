@@ -6,7 +6,7 @@ import {
   SvgIcon, TextField
 } from '@material-ui/core';
 import { Search as SearchIcon } from 'react-feather';
-import { useNavigate } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 
 const CustomerListToolbar = (props) => {
 

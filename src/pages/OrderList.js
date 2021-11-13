@@ -3,7 +3,7 @@ import { Box, Container } from '@material-ui/core';
 import OrderListResults from '../components/order/OrderListResults';
 import OrderListToolbar from '../components/order/OrderListToolbar';
 import { useEffect, useState } from 'react';
-import {getOrders} from 'src/utils/api/resources';
+import {getAll} from 'src/utils/api/resources';
 
 const OrderList = () => {
 
@@ -12,10 +12,10 @@ const OrderList = () => {
     searchOrders()
   },[]);
 
-  const searchOrders = () => {
-     let result =getOrders('orders');
+  const searchOrders = async () => {
+     let result = await getAll('orders');
      console.log(result);
-     setOrders(result);
+     setOrders(result.orders);
   }
 
   return <>
