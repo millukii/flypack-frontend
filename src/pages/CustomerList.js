@@ -15,7 +15,6 @@ const CustomerList = () => {
   const buscarClientes = async () => {
      let result = await firebaseBuscar('clientes');
      setClientes(result);
-     debugger;
   }
   return <>
     <Helmet>

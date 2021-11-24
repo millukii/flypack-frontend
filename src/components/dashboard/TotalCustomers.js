@@ -24,19 +24,19 @@ const TotalCustomers = (props) => (
             gutterBottom
             variant="h6"
           >
-            TOTAL CUSTOMERS
+            TOTAL CLIENTES
           </Typography>
           <Typography
             color="textPrimary"
             variant="h3"
           >
-            1,600
+            {props.totalcustomers}
           </Typography>
         </Grid>
         <Grid item>
           <Avatar
             sx={{
-              backgroundColor: green[600],
+              backgroundColor: props.avatarcolor ,
               height: 56,
               width: 56
             }}
@@ -52,21 +52,21 @@ const TotalCustomers = (props) => (
           pt: 2
         }}
       >
-        <ArrowUpwardIcon sx={{ color: green[900] }} />
+        <ArrowUpwardIcon sx={{ color: props.secondarycolor }} />
         <Typography
           variant="body2"
           sx={{
-            color: green[900],
+            color: props.secondarycolor ,
             mr: 1
           }}
         >
-          16%
+          {props.percent}
         </Typography>
         <Typography
           color="textSecondary"
           variant="caption"
         >
-          Since last month
+          {props.since}
         </Typography>
       </Box>
     </CardContent>

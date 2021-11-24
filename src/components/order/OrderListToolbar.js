@@ -31,12 +31,12 @@ const OrderListToolbar = (props) => {
       </Button>
       <Button
         onClick={() => {
-          navigate('/app/order-new', { replace: true });
+          navigate('/app/import-preorders', { replace: true, title:"Importar Ordenes Clientes", actionDescription: "Seleccione un archivo en formato xlsx"});
         }}
-        color="secondary"
+        color="primary"
         variant="contained"
       >
-        Cargar ordenes clientes
+        Importar Ordenes Clientes
       </Button>
             <Button
         onClick={() => {
@@ -66,7 +66,7 @@ const OrderListToolbar = (props) => {
                   </InputAdornment>
                 )
               }}
-              placeholder="Search order"
+              placeholder="Buscar orden"
               variant="outlined"
             />
           </Box>

@@ -1,10 +1,62 @@
 
+import {firebaseCrear} from 'src/utils/FirebaseUtil';
 
 const { 
   REACT_APP_API_BACKEND,
 
 } = "http://localhost:8080/";
 
+export async function processMassiveImportExcel(data, resource){
+  console.log("processMassiveImportExcel for resource ", resource);
+  if(resource ==='customers'){
+    for(let i = 1; i < data.length; i++){
+        var newClient = {
+          businessId: data[i][0],
+          name: data[i][1],
+          phone: data[i][2],
+          email: data[i][3],
+        }
+      }
+     firebaseCrear('customers', newClient);
+    }
+
+    return 200;
+
+  return 500;
+}
+
+export async function processMassivePreOrdersImportExcel(data, resource){
+  console.log("processMassiveImportExcel for resource ", resource);
+  if(resource ==='preorders'){
+    for(let i = 1; i < data.length; i++){
+    console.log("data new order ", data[i])
+        var newOrder = {
+          purchaseOrderId: data[i][0],
+          customerOrderId: data[i][1],
+          customerEmailId: data[i][2],
+          orderType: data[i][3],
+          orderDate: data[i][4],
+          orderStatus: data[i][5],
+          orderType: data[i][6],
+          shippingInfo: {
+            phone: data[i][7],
+            estimatedDeliveryDate: data[i][8],
+            estimatedShipDate: data[i][9],
+            methodCode: data[i][10],
+            postalAddress: data[i][11],
+          },
+          orderLines: {
+
+          }
+        }
+         createResource('orders', newOrder);
+    }
+
+    return 200;
+  }
+
+  return 500;
+}
 export async function getAll(resource){
   console.log("searching request to api backend for the resource ", resource);
   let result = null;

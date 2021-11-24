@@ -98,7 +98,7 @@ const LatestProducts = (props) => (
         size="small"
         variant="text"
       >
-        View all
+        Ver todos
       </Button>
     </Box>
   </Card>

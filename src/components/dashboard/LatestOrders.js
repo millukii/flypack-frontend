@@ -155,7 +155,7 @@ const LatestOrders = (props) => (
         size="small"
         variant="text"
       >
-        View all
+        Ver todas
       </Button>
     </Box>
   </Card>

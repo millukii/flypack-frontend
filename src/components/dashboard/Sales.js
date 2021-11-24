@@ -101,7 +101,7 @@ const Sales = (props) => {
             size="small"
             variant="text"
           >
-            Last 7 days
+            Ultima semana
           </Button>
         )}
         title="Latest Sales"
@@ -134,7 +134,7 @@ const Sales = (props) => {
           size="small"
           variant="text"
         >
-          Overview
+          Reseña
         </Button>
       </Box>
     </Card>

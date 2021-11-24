@@ -1,6 +1,6 @@
 
 
-import {DataGrid } from '@mui/x-data-grid';
+import {DataGrid , GridToolbar } from '@mui/x-data-grid';
 
 const ManifiestDataGrid = (rows, columns) => {
 
@@ -8,6 +8,9 @@ const ManifiestDataGrid = (rows, columns) => {
                 <DataGrid
                   columns={columns}
                   rows={rows}
+                  components={{
+                    Toolbar: GridToolbar
+                  }}
                 />
   )
 

@@ -14,43 +14,44 @@ import {
 import PropTypes from 'prop-types';
 import { useState } from 'react';
 import PerfectScrollbar from 'react-perfect-scrollbar';
-import { firebaseEliminar } from 'src/utils/FirebaseUtil';
+import { deleteResource, editResource } from 'src/utils/api/resources';
 
-const CustomerListResults = ({ customers, ...rest }) => {
-  const [selectedCustomerIds, setSelectedCustomerIds] = useState([]);
+const TravelerListResults = ({ travelers, ...rest }) => {
+  console.log('Traveler', travelers);
+  const [selectedTravelerIds, setSelectedTravelerIds] = useState([]);
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(0);
 
   const handleSelectAll = (event) => {
-    let newSelectedCustomerIds;
+    let newSelectedTravelerIds;
 
     if (event.target.checked) {
-      newSelectedCustomerIds = customers.map((customer) => customer.id);
+      newSelectedTravelerIds = travelers.map((traveler) => traveler.id);
     } else {
-      newSelectedCustomerIds = [];
+      newSelectedTravelerIds = [];
     }
 
-    setSelectedCustomerIds(newSelectedCustomerIds);
+    setSelectedTravelerIds(newSelectedTravelerIds);
   };
 
   const handleSelectOne = (event, id) => {
-    const selectedIndex = selectedCustomerIds.indexOf(id);
-    let newSelectedCustomerIds = [];
+    const selectedIndex = selectedTravelerIds.indexOf(id);
+    let newSelectedTravelerIds = [];
 
     if (selectedIndex === -1) {
-      newSelectedCustomerIds = newSelectedCustomerIds.concat(selectedCustomerIds, id);
+      newSelectedTravelerIds = newSelectedTravelerIds.concat(selectedTravelerIds, id);
     } else if (selectedIndex === 0) {
-      newSelectedCustomerIds = newSelectedCustomerIds.concat(selectedCustomerIds.slice(1));
-    } else if (selectedIndex === selectedCustomerIds.length - 1) {
-      newSelectedCustomerIds = newSelectedCustomerIds.concat(selectedCustomerIds.slice(0, -1));
+      newSelectedTravelerIds = newSelectedTravelerIds.concat(selectedTravelerIds.slice(1));
+    } else if (selectedIndex === selectedTravelerIds.length - 1) {
+      newSelectedTravelerIds = newSelectedTravelerIds.concat(selectedTravelerIds.slice(0, -1));
     } else if (selectedIndex > 0) {
-      newSelectedCustomerIds = newSelectedCustomerIds.concat(
-        selectedCustomerIds.slice(0, selectedIndex),
-        selectedCustomerIds.slice(selectedIndex + 1)
+      newSelectedTravelerIds = newSelectedTravelerIds.concat(
+        selectedTravelerIds.slice(0, selectedIndex),
+        selectedTravelerIds.slice(selectedIndex + 1)
       );
     }
 
-    setSelectedCustomerIds(newSelectedCustomerIds);
+    setSelectedTravelerIds(newSelectedTravelerIds);
   };
 
   const handleLimitChange = (event) => {
@@ -61,7 +62,13 @@ const CustomerListResults = ({ customers, ...rest }) => {
     setPage(newPage);
   };
 
+  if (travelers === undefined || travelers === null) {
+    travelers = [{
+      "id" : "1",
+    }]
+  }
   return (
+    
     <Card {...rest}>
       <PerfectScrollbar>
         <Box sx={{ minWidth: 1050 }}>
@@ -70,42 +77,48 @@ const CustomerListResults = ({ customers, ...rest }) => {
               <TableRow>
                 <TableCell padding="checkbox">
                   <Checkbox
-                    checked={selectedCustomerIds.length === customers.length}
+                    checked={selectedTravelerIds.length === travelers.length}
                     color="primary"
                     indeterminate={
-                      selectedCustomerIds.length > 0
-                      && selectedCustomerIds.length < customers.length
+                      selectedTravelerIds.length > 0
+                      && selectedTravelerIds.length < travelers.length
                     }
                     onChange={handleSelectAll}
                   />
                 </TableCell>
                 <TableCell>
-                  Name
+                  Codigo
                 </TableCell>
                 <TableCell>
-                  Business Identity 
+                  Nombre
+                </TableCell>
+                <TableCell>
+                  Telefono
                 </TableCell>
                 <TableCell>
                   Email
                 </TableCell>
                 <TableCell>
-                  Phone
+                  Documento
                 </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {customers.slice(0, limit).map((customer) => (
+              {travelers.slice(0, limit).map((traveler) => (
                 <TableRow
                   hover
-                  key={customer.businessId}
-                  selected={selectedCustomerIds.indexOf(customer.businessId) !== -1}
+                  key={traveler.id}
+                  selected={selectedTravelerIds.indexOf(traveler.id) !== -1}
                 >
                   <TableCell padding="checkbox">
                     <Checkbox
-                      checked={selectedCustomerIds.indexOf(customer.businessId) !== -1}
-                      onChange={(event) => handleSelectOne(event, customer.businessId)}
+                      checked={selectedTravelerIds.indexOf(traveler.id) !== -1}
+                      onChange={(event) => handleSelectOne(event, traveler.id)}
                       value="true"
                     />
+                  </TableCell>
+                  <TableCell>
+                    {traveler.travelerId}
                   </TableCell>
                   <TableCell>
                     <Box
@@ -118,24 +131,23 @@ const CustomerListResults = ({ customers, ...rest }) => {
                         color="textPrimary"
                         variant="body1"
                       >
-                        {customer.name} 
+                        {traveler.fullname} 
                       </Typography>
                     </Box>
                   </TableCell>
                   <TableCell>
-                    {customer.businessId}
+                    {traveler.phone}
                   </TableCell>
                   <TableCell>
-                    {customer.email}
+                    {traveler.email}
                   </TableCell>
                   <TableCell>
-                    {customer.phone}
+                    {traveler.identificationNumber}
                   </TableCell>
-
                   <TableCell>
                     <Button
                       onClick={() => {
-                        firebaseEliminar('clientes', customer.id)
+                        deleteResource('travelers', traveler.id)
                         window.location.reload(true);
                       }}
                       color="error"
@@ -143,8 +155,27 @@ const CustomerListResults = ({ customers, ...rest }) => {
                     >
                       Eliminar
                     </Button>
+                    <Button
+                      onClick={() => {
+                        editResource('travelers', traveler.id)
+                        window.location.reload(true);
+                      }}
+                      color="info"
+                      variant="contained"
+                    >
+                      Editar
+                    </Button>
+                    <Button
+                      onClick={() => {
+                        editResource('travelers', traveler.id)
+                        window.location.reload(true);
+                      }}
+                      color="info"
+                      variant="contained"
+                    >
+                      Detalle
+                    </Button>
                   </TableCell>
-
                 </TableRow>
               ))}
             </TableBody>
@@ -153,7 +184,7 @@ const CustomerListResults = ({ customers, ...rest }) => {
       </PerfectScrollbar>
       <TablePagination
         component="div"
-        count={customers.length}
+        count={travelers.length}
         onPageChange={handlePageChange}
         onRowsPerPageChange={handleLimitChange}
         page={page}
@@ -164,8 +195,8 @@ const CustomerListResults = ({ customers, ...rest }) => {
   );
 };
 
-CustomerListResults.propTypes = {
-  customers: PropTypes.array.isRequired
+TravelerListResults.propTypes = {
+  travelers: PropTypes.array.isRequired
 };
 
-export default CustomerListResults;
+export default TravelerListResults;

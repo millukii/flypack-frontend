@@ -5,22 +5,16 @@ import {
 } from '@material-ui/core';
 import { Formik } from 'formik';
 import { Helmet } from 'react-helmet';
-import { useNavigate, useParams } from 'react-router-dom';
-
-import { firebaseEdit } from 'src/utils/FirebaseUtil';
+import { useNavigate } from 'react-router-dom';
+import { firebaseCrear } from 'src/utils/FirebaseUtil';
 import * as Yup from 'yup';
 
-const EditCustomer = (customer) => {
-       let params = useParams();
+const AddCustomer = () => {
   const navigate = useNavigate();
-    console.log("props ", customer);
-             console.log("navigate  ", navigate);
-         console.log("params  ", params.customer);
-  const editCustomer = (e) => {
-    console.log("event ", e);
 
-    //firebaseEdit('clientes', cliente);
-    //navigate('/app/customers', { replace: true });
+  const crearCliente = (cliente) => {
+    firebaseCrear('clientes', cliente);
+    navigate('/app/customers', { replace: true });
   }
 
   return (
@@ -53,8 +47,8 @@ const EditCustomer = (customer) => {
                 businessId: Yup.string().max(255).required('Busines sIdentity is required')
               })
             }
-            onSubmit={(event) => {
-              editCustomer(event);
+            onSubmit={(usuario) => {
+              crearCliente(usuario);
             }}
           >
             {({
@@ -72,7 +66,7 @@ const EditCustomer = (customer) => {
                     color="textPrimary"
                     variant="h2"
                   >
-                    Editar Cliente
+                    Crear nuevo Cliente
                   </Typography>
                 </Box>
                 <TextField
@@ -135,7 +129,7 @@ const EditCustomer = (customer) => {
                     type="submit"
                     variant="contained"
                   >
-                    Guardar
+                    Crear
                   </Button>
                 </Box>
 
@@ -148,4 +142,4 @@ const EditCustomer = (customer) => {
   );
 };
 
-export default EditCustomer;
+export default AddCustomer;

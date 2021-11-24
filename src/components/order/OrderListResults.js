@@ -155,8 +155,26 @@ const OrderListResults = ({ orders, ...rest }) => {
                     >
                       Eliminar
                     </Button>
-                  </TableCell>
-                  <TableCell>
+                    <Button
+                      onClick={() => {
+                        editResource('orders', order.id)
+                        window.location.reload(true);
+                      }}
+                      color="info"
+                      variant="contained"
+                    >
+                      Editar
+                    </Button>
+                    <Button
+                      onClick={() => {
+                        editResource('orders', order.id)
+                        window.location.reload(true);
+                      }}
+                      color="info"
+                      variant="contained"
+                    >
+                      Detalle
+                    </Button>
                     <Button
                       onClick={() => {
                         editResource('orders', order.id)

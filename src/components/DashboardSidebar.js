@@ -61,7 +61,7 @@ const items = [
     title: 'Manifiestos'
   },
   {
-    href: '/app/roundsman',
+    href: '/app/travelers',
     icon: UsersIcon,
     title: 'Repartidores'
   },

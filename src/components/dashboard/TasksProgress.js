@@ -27,7 +27,7 @@ const TasksProgress = (props) => (
             gutterBottom
             variant="h6"
           >
-            TASKS PROGRESS
+           PROGRESO
           </Typography>
           <Typography
             color="textPrimary"

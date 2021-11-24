@@ -5,14 +5,19 @@ import Account from './pages/Account';
 import CustomerList from './pages/CustomerList';
 import Dashboard from './pages/Dashboard';
 import EditCustomer from './pages/EditCustomer';
+import AddCustomer from './pages/AddCustomer';
 import EditShipping from './pages/EditShipping';
 import ShippingAddPackages from './pages/ShippingAddPackages';
 import Login from './pages/Login';
 import NotFound from './pages/NotFound';
+import ImportExcelCustomers from './pages/ImportExcelCustomers';
+import ImportExcelPreOrders from './pages/ImportExcelPreOrders';
 import ProductList from './pages/ProductList';
 import PackageList from './pages/PackageList';
 import OrderList from './pages/OrderList';
+import TravelerList from './pages/TravelerList';
 import ShippingList from './pages/ShippingList';
+import ManifiestList from './pages/ManifiestList';
 import Register from './pages/Register';
 import Settings from './pages/Settings';
 
@@ -23,11 +28,16 @@ const routes = [
     children: [
       { path: 'account', element: <Account /> },
       { path: 'customers', element: <CustomerList /> },
-      { path: 'customer-new', element: <EditCustomer /> },
+      { path: 'customer-new', element: <AddCustomer /> },
+      { path: 'customer-edit', element: <EditCustomer /> },
+      { path: 'import', element: <ImportExcelCustomers /> },
+      { path: 'import-preorders', element: <ImportExcelPreOrders /> },
       { path: 'orders', element: <OrderList /> },
+      { path: 'travelers', element: <TravelerList /> },
       { path: 'dashboard', element: <Dashboard /> },
       { path: 'products', element: <ProductList /> },
       { path: 'packages', element: <PackageList /> },
+      { path: 'manifiests', element: <ManifiestList /> },
       { path: 'shippings', element: <ShippingList /> },
       { path: 'shipping-new', element: <EditShipping /> },
       { path: 'shipping-add-packages', element: <ShippingAddPackages /> },

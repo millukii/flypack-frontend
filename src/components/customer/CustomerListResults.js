@@ -13,10 +13,15 @@ import {
 } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import { firebaseEliminar } from 'src/utils/FirebaseUtil';
 
-const CustomerListResults = ({ customers, ...rest }) => {
+const CustomerListResults = ({ customers, ...rest }) => { 
+
+  const navigate = useNavigate();
+
   const [selectedCustomerIds, setSelectedCustomerIds] = useState([]);
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(0);
@@ -34,6 +39,7 @@ const CustomerListResults = ({ customers, ...rest }) => {
   };
 
   const handleSelectOne = (event, id) => {
+    console.log("one selected id ", id )
     const selectedIndex = selectedCustomerIds.indexOf(id);
     let newSelectedCustomerIds = [];
 
@@ -80,16 +86,16 @@ const CustomerListResults = ({ customers, ...rest }) => {
                   />
                 </TableCell>
                 <TableCell>
-                  Name
+                  Nombre
                 </TableCell>
                 <TableCell>
-                  Business Identity 
+                  Rut
                 </TableCell>
                 <TableCell>
                   Email
                 </TableCell>
                 <TableCell>
-                  Phone
+                  Telefono
                 </TableCell>
               </TableRow>
             </TableHead>
@@ -97,13 +103,13 @@ const CustomerListResults = ({ customers, ...rest }) => {
               {customers.slice(0, limit).map((customer) => (
                 <TableRow
                   hover
-                  key={customer.businessId}
-                  selected={selectedCustomerIds.indexOf(customer.businessId) !== -1}
+                  key={customer.id}
+                  selected={selectedCustomerIds.indexOf(customer.id) !== -1}
                 >
                   <TableCell padding="checkbox">
                     <Checkbox
-                      checked={selectedCustomerIds.indexOf(customer.businessId) !== -1}
-                      onChange={(event) => handleSelectOne(event, customer.businessId)}
+                      checked={selectedCustomerIds.indexOf(customer.id) !== -1}
+                      onChange={(event) => handleSelectOne(event, customer.id)}
                       value="true"
                     />
                   </TableCell>
@@ -134,7 +140,9 @@ const CustomerListResults = ({ customers, ...rest }) => {
 
                   <TableCell>
                     <Button
-                      onClick={() => {
+                       name="deleteCustomerButton"
+                      id="deleteCustomerButton"
+                      onClick={(event) => {
                         firebaseEliminar('clientes', customer.id)
                         window.location.reload(true);
                       }}
@@ -142,6 +150,20 @@ const CustomerListResults = ({ customers, ...rest }) => {
                       variant="contained"
                     >
                       Eliminar
+                    </Button>
+                     <Button
+                      name="editCustomerButton"
+                      id="editCustomerButton"
+                      onClick={(event) => {
+                        console.log("event ", event)
+                        console.log("customer ", customer)
+                       navigate('/app/customer-edit', { replace:true,customer: customer }); 
+                       
+                      }}
+                      color="error"
+                      variant="contained"
+                    >
+                      Editar
                     </Button>
                   </TableCell>
 

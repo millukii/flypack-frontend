@@ -58,19 +58,19 @@ const TrafficByDevice = (props) => {
   const devices = [
     {
       title: 'Desktop',
-      value: 63,
+      value: props.desktop,
       icon: LaptopMacIcon,
       color: colors.indigo[500]
     },
     {
       title: 'Tablet',
-      value: 15,
+      value: props.tablet,
       icon: TabletIcon,
       color: colors.red[600]
     },
     {
       title: 'Mobile',
-      value: 23,
+      value: props.phone,
       icon: PhoneIcon,
       color: colors.orange[600]
     }
@@ -78,7 +78,7 @@ const TrafficByDevice = (props) => {
 
   return (
     <Card {...props}>
-      <CardHeader title="Traffic by Device" />
+      <CardHeader title="Trafico por Dispositivo" />
       <Divider />
       <CardContent>
         <Box

@@ -8,6 +8,7 @@ import TasksProgress from '../components/dashboard/TasksProgress';
 import TotalCustomers from '../components/dashboard/TotalCustomers';
 import TotalProfit from '../components/dashboard/TotalProfit';
 import TrafficByDevice from '../components/dashboard/TrafficByDevice';
+import { red,green,blue} from '@material-ui/core/colors';
 
 const Dashboard = () => (
   <>
@@ -33,7 +34,12 @@ const Dashboard = () => (
             xl={3}
             xs={12}
           >
-            <Budget />
+            <Budget 
+                budget= "10000"
+                since= "mes pasado"
+                percent= "%12" 
+                avatarcolor={red[600].toString()} 
+                secondarycolor={red[900].toString()}/>
           </Grid>
           <Grid
             item
@@ -42,7 +48,13 @@ const Dashboard = () => (
             xl={3}
             xs={12}
           >
-            <TotalCustomers />
+            <TotalCustomers 
+                totalcustomers= "1002"
+                since= "mes pasado"
+                percent= "%20" 
+                avatarcolor={green[600].toString()} 
+                secondarycolor={green[900].toString()}
+            />
           </Grid>
           <Grid
             item
@@ -78,7 +90,7 @@ const Dashboard = () => (
             xl={3}
             xs={12}
           >
-            <TrafficByDevice sx={{ height: '100%' }} />
+            <TrafficByDevice sx={{ height: '100%' }} tablet="20" desktop="60" phone="20" />
           </Grid>
           <Grid
             item

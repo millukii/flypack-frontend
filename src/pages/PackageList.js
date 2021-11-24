@@ -136,7 +136,7 @@ const PackageList= ({city,xcapacity,scapacity,mcapacity}) => {
             container
             spacing={3}
           >
-            <List sx={{width: '100%', maxWidth: '100%', bgcolor: 'background.paper', height: '300px', marginBottom: '50px'}}>
+            <List sx={{width: '100%', maxWidth: '100%', bgcolor: 'background.paper', height: '100%', marginBottom: '50px'}}>
               {shipmentPackages.map((shipmentPackage) => {
                 const labelId = `checkbox-list-label-${shipmentPackage.id}`;
                 const labelIdCheckBox = `checkbox-list-check-${shipmentPackage.id}`;
@@ -168,14 +168,6 @@ const PackageList= ({city,xcapacity,scapacity,mcapacity}) => {
                   </ListItem>
               )})}
             </List>
-          </Grid>
-          <Grid
-            container
-            spacing={3}
-          >
-{/*              <div style={{ height: 400, width: '100%' }}>
-                    <ManifiestDataGrid rows= {manifiests} columns={columns} />
-                </div> */}
           </Grid>
         </Box>
       </Container>

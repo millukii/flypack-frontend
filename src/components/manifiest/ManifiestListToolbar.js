@@ -8,7 +8,7 @@ import {
 import { Search as SearchIcon } from 'react-feather';
 import { useNavigate } from 'react-router';
 
-const CustomerListToolbar = (props) => {
+const ManifiestListToolbar = (props) => {
 
   const navigate = useNavigate();
 
@@ -27,7 +27,7 @@ const CustomerListToolbar = (props) => {
         color="primary"
         variant="contained"
       >
-        Add customer
+        Nuevo
       </Button>
     </Box>
     <Box sx={{ mt: 3 }}>
@@ -48,7 +48,7 @@ const CustomerListToolbar = (props) => {
                   </InputAdornment>
                 )
               }}
-              placeholder="Search customer"
+              placeholder="Buscar manifiesto"
               variant="outlined"
             />
           </Box>
@@ -58,4 +58,4 @@ const CustomerListToolbar = (props) => {
   </Box>
 }
 
-export default CustomerListToolbar;
+export default ManifiestListToolbar;

@@ -16,41 +16,41 @@ import { useState } from 'react';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import { firebaseEliminar } from 'src/utils/FirebaseUtil';
 
-const CustomerListResults = ({ customers, ...rest }) => {
-  const [selectedCustomerIds, setSelectedCustomerIds] = useState([]);
+const ManifiestListResults = ({ manifiests, ...rest }) => {
+  const [selectedManifiestIds, setSelectedManifiestIds] = useState([]);
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(0);
 
   const handleSelectAll = (event) => {
-    let newSelectedCustomerIds;
+    let newSelectedManifiestIds;
 
     if (event.target.checked) {
-      newSelectedCustomerIds = customers.map((customer) => customer.id);
+      newSelectedManifiestIds = manifiests.map((manifiest) => manifiest.id);
     } else {
-      newSelectedCustomerIds = [];
+      newSelectedManifiestIds = [];
     }
 
-    setSelectedCustomerIds(newSelectedCustomerIds);
+    setSelectedManifiestIds(newSelectedManifiestIds);
   };
 
   const handleSelectOne = (event, id) => {
-    const selectedIndex = selectedCustomerIds.indexOf(id);
-    let newSelectedCustomerIds = [];
+    const selectedIndex = selectedManifiestIds.indexOf(id);
+    let newSelectedManifiestIds = [];
 
     if (selectedIndex === -1) {
-      newSelectedCustomerIds = newSelectedCustomerIds.concat(selectedCustomerIds, id);
+      newSelectedManifiestIds = newSelectedManifiestIds.concat(selectedManifiestIds, id);
     } else if (selectedIndex === 0) {
-      newSelectedCustomerIds = newSelectedCustomerIds.concat(selectedCustomerIds.slice(1));
-    } else if (selectedIndex === selectedCustomerIds.length - 1) {
-      newSelectedCustomerIds = newSelectedCustomerIds.concat(selectedCustomerIds.slice(0, -1));
+      newSelectedManifiestIds = newSelectedManifiestIds.concat(selectedManifiestIds.slice(1));
+    } else if (selectedIndex === selectedManifiestIds.length - 1) {
+      newSelectedManifiestIds = newSelectedManifiestIds.concat(selectedManifiestIds.slice(0, -1));
     } else if (selectedIndex > 0) {
-      newSelectedCustomerIds = newSelectedCustomerIds.concat(
-        selectedCustomerIds.slice(0, selectedIndex),
-        selectedCustomerIds.slice(selectedIndex + 1)
+      newSelectedManifiestIds = newSelectedManifiestIds.concat(
+        selectedManifiestIds.slice(0, selectedIndex),
+        selectedManifiestIds.slice(selectedIndex + 1)
       );
     }
 
-    setSelectedCustomerIds(newSelectedCustomerIds);
+    setSelectedManifiestIds(newSelectedManifiestIds);
   };
 
   const handleLimitChange = (event) => {
@@ -70,40 +70,52 @@ const CustomerListResults = ({ customers, ...rest }) => {
               <TableRow>
                 <TableCell padding="checkbox">
                   <Checkbox
-                    checked={selectedCustomerIds.length === customers.length}
+                    checked={selectedManifiestIds.length === manifiests.length}
                     color="primary"
                     indeterminate={
-                      selectedCustomerIds.length > 0
-                      && selectedCustomerIds.length < customers.length
+                      selectedManifiestIds.length > 0
+                      && selectedManifiestIds.length < manifiests.length
                     }
                     onChange={handleSelectAll}
                   />
                 </TableCell>
                 <TableCell>
-                  Name
+                  Numero de Manifiesto
                 </TableCell>
                 <TableCell>
-                  Business Identity 
+                  Fecha Delivery
                 </TableCell>
                 <TableCell>
-                  Email
+                  Ciudad
                 </TableCell>
                 <TableCell>
-                  Phone
+                  Comuna
+                </TableCell>
+                <TableCell>
+                  Cap. Paquetes S
+                </TableCell>
+                <TableCell>
+                  Cap. Paquetes M
+                </TableCell>
+                <TableCell>
+                  Cap. Paquetes X
+                </TableCell>
+                <TableCell>
+                 
                 </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {customers.slice(0, limit).map((customer) => (
+              {manifiests.slice(0, limit).map((manifiest) => (
                 <TableRow
                   hover
-                  key={customer.businessId}
-                  selected={selectedCustomerIds.indexOf(customer.businessId) !== -1}
+                  key={manifiest.id}
+                  selected={selectedManifiestIds.indexOf(manifiest.id) !== -1}
                 >
                   <TableCell padding="checkbox">
                     <Checkbox
-                      checked={selectedCustomerIds.indexOf(customer.businessId) !== -1}
-                      onChange={(event) => handleSelectOne(event, customer.businessId)}
+                      checked={selectedManifiestIds.indexOf(manifiest.id) !== -1}
+                      onChange={(event) => handleSelectOne(event, manifiest.id)}
                       value="true"
                     />
                   </TableCell>
@@ -118,24 +130,34 @@ const CustomerListResults = ({ customers, ...rest }) => {
                         color="textPrimary"
                         variant="body1"
                       >
-                        {customer.name} 
+                        {manifiest.manifiestNumber} 
                       </Typography>
                     </Box>
                   </TableCell>
                   <TableCell>
-                    {customer.businessId}
+                    {manifiest.deliveryDate}
                   </TableCell>
                   <TableCell>
-                    {customer.email}
+                    {manifiest.city}
                   </TableCell>
                   <TableCell>
-                    {customer.phone}
+                    {manifiest.commune}
                   </TableCell>
+                  <TableCell>
+                    {manifiest.smallPackagesCapacity}
+                  </TableCell>
+                  <TableCell>
+                    {manifiest.mediumPackagesCapacity}
+                  </TableCell>
+                  <TableCell>
+                    {manifiest.xtraPackagesCapacity}
+                  </TableCell>
+
 
                   <TableCell>
                     <Button
                       onClick={() => {
-                        firebaseEliminar('clientes', customer.id)
+                        firebaseEliminar('clientes', manifiest.id)
                         window.location.reload(true);
                       }}
                       color="error"
@@ -144,7 +166,17 @@ const CustomerListResults = ({ customers, ...rest }) => {
                       Eliminar
                     </Button>
                   </TableCell>
-
+                  <TableCell>
+                    <Button
+                      onClick={() => {
+                        window.location.reload(true);
+                      }}
+                      color="error"
+                      variant="contained"
+                    >
+                      Paquetes
+                    </Button>
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>
@@ -153,7 +185,7 @@ const CustomerListResults = ({ customers, ...rest }) => {
       </PerfectScrollbar>
       <TablePagination
         component="div"
-        count={customers.length}
+        count={manifiests.length}
         onPageChange={handlePageChange}
         onRowsPerPageChange={handleLimitChange}
         page={page}
@@ -164,8 +196,8 @@ const CustomerListResults = ({ customers, ...rest }) => {
   );
 };
 
-CustomerListResults.propTypes = {
-  customers: PropTypes.array.isRequired
+ManifiestListResults.propTypes = {
+  manifiests: PropTypes.array.isRequired
 };
 
-export default CustomerListResults;
+export default ManifiestListResults;

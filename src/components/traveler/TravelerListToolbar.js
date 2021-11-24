@@ -8,7 +8,7 @@ import {
 import { Search as SearchIcon } from 'react-feather';
 import { useNavigate } from 'react-router';
 
-const CustomerListToolbar = (props) => {
+const TravelerListToolbar = (props) => {
 
   const navigate = useNavigate();
 
@@ -22,13 +22,23 @@ const CustomerListToolbar = (props) => {
 
       <Button
         onClick={() => {
-          navigate('/app/customer-new', { replace: true });
+          navigate('/app/traveler-new', { replace: true });
         }}
         color="primary"
         variant="contained"
       >
-        Add customer
+        Nuevo Repartidor
       </Button>
+      <Button
+        onClick={() => {
+          navigate('/app/import-travelers', { replace: true, title:"Importar datos repartidores", actionDescription: "Seleccione un archivo en formato xlsx"});
+        }}
+        color="primary"
+        variant="contained"
+      >
+        Importar Datos Repartidores
+      </Button>
+
     </Box>
     <Box sx={{ mt: 3 }}>
       <Card>
@@ -48,7 +58,7 @@ const CustomerListToolbar = (props) => {
                   </InputAdornment>
                 )
               }}
-              placeholder="Search customer"
+              placeholder="Buscar repartidor"
               variant="outlined"
             />
           </Box>
@@ -58,4 +68,4 @@ const CustomerListToolbar = (props) => {
   </Box>
 }
 
-export default CustomerListToolbar;
+export default TravelerListToolbar;

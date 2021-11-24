@@ -19,7 +19,16 @@ const CustomerListToolbar = (props) => {
         justifyContent: 'flex-end'
       }}
     >
-
+      <Button
+        onClick={() => {
+          navigate('/app/import', { replace: true, title:"Importar Clientes", actionDescription: "Seleccione un archivo en formato xlsx", resource: "customers"});
+        }}
+        color="primary"
+        variant="contained"
+      >
+        Importar Clientes
+      </Button>
+      
       <Button
         onClick={() => {
           navigate('/app/customer-new', { replace: true });
@@ -27,7 +36,7 @@ const CustomerListToolbar = (props) => {
         color="primary"
         variant="contained"
       >
-        Add customer
+        Agregar Cliente
       </Button>
     </Box>
     <Box sx={{ mt: 3 }}>
@@ -48,7 +57,11 @@ const CustomerListToolbar = (props) => {
                   </InputAdornment>
                 )
               }}
-              placeholder="Search customer"
+              onBlur={(event) => {
+                alert(event.target.value);
+
+              }}
+              placeholder="Buscar cliente"
               variant="outlined"
             />
           </Box>
