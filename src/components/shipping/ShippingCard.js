@@ -36,35 +36,14 @@ const ShippingCard = ({ shipping, ...rest }) => {
           pb: 3
         }}
       >
-        <Avatar
-          alt="Shipping"
-          src={shipping.media}
-          variant="square"
-        />
-      </Box>
-      <Typography
-        align="center"
-        color="textPrimary"
-        gutterBottom
-        variant="h4"
-      >
-      ID: {shipping.id}
-      </Typography>
-      <Typography
-        align="center"
-        color="textPrimary"
-        variant="body1"
-      >
-        Numero de Orden {shipping.order_nro}
-        </Typography>
-        <Button
+           <Button
           onClick={() => {
            window.location.reload(true);
            }}
            color="error"
            variant="contained"
           >
-            Ver Detalle
+            Detalle
        </Button>
         <Button
           onClick={() => {
@@ -73,16 +52,7 @@ const ShippingCard = ({ shipping, ...rest }) => {
            color="warning"
            variant="contained"
           >
-            Descargar Etiqueta
-       </Button>
-       <Button
-          onClick={() => {
-           window.location.reload(true);
-           }}
-           color="info"
-           variant="contained"
-          >
-            Enviar por Correo
+            Etiqueta
        </Button>
        <Button
           onClick={() => {
@@ -100,26 +70,43 @@ const ShippingCard = ({ shipping, ...rest }) => {
           >
             Agregar Paquetes
        </Button>
+      </Box>
+      <Typography
+        align="center"
+        color="textPrimary"
+        gutterBottom
+        variant="h4"
+      >
+      Numero de envio ID: {shipping.id}
+      </Typography>
+      <Typography
+        align="center"
+        color="textPrimary"
+        variant="body1"
+      >
+        Numero de Orden {shipping.order_nro}
+        </Typography>
+     
         <Typography
         align="center"
         color="textPrimary"
         variant="body1"
         >
-         Tipo {shipping.type}
+         Tipo de envio {shipping.type}
         </Typography>
         <Typography
         align="center"
         color="textPrimary"
         variant="body1"
         >
-          Valor {shipping.value}
+          Valor total {shipping.value}
         </Typography>
         <Typography
         align="center"
         color="textPrimary"
         variant="body1"
         >
-         Estado{shipping.shipping_states_id}
+         Estado {shipping.shipping_states_id}
         </Typography>
                 <Typography
         align="center"

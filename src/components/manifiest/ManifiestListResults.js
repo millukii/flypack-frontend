@@ -157,7 +157,6 @@ const ManifiestListResults = ({ manifiests, ...rest }) => {
                   <TableCell>
                     <Button
                       onClick={() => {
-                        firebaseEliminar('clientes', manifiest.id)
                         window.location.reload(true);
                       }}
                       color="error"
@@ -165,16 +164,33 @@ const ManifiestListResults = ({ manifiests, ...rest }) => {
                     >
                       Eliminar
                     </Button>
-                  </TableCell>
-                  <TableCell>
+                    <Button
+                      onClick={() => {
+                        
+                        window.location.reload(true);
+                      }}
+                      color="info"
+                      variant="contained"
+                    >
+                      Editar
+                    </Button>
                     <Button
                       onClick={() => {
                         window.location.reload(true);
                       }}
-                      color="error"
+                      color="info"
                       variant="contained"
                     >
                       Paquetes
+                    </Button>
+                     <Button
+                      onClick={() => {
+                        window.location.reload(true);
+                      }}
+                      color="info"
+                      variant="contained"
+                    >
+                      Detalle
                     </Button>
                   </TableCell>
                 </TableRow>

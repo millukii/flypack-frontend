@@ -10,6 +10,9 @@ import CommentIcon from '@mui/icons-material/Comment';
 
 import PackageListToolbar from '../components/package/PackageListToolbar';
 import ManifiestDataGrid from '../components/manifiest/ManifiestDataGrid';
+import Barcode from 'react-barcode';
+import html2canvas from 'html2canvas';
+import { jsPDF } from 'jspdf';
 
 import {getAll} from 'src/utils/api/resources';
 
@@ -23,7 +26,22 @@ const PackageList= ({city,xcapacity,scapacity,mcapacity}) => {
   const [checked, setChecked] = React.useState([0]);
  const [shipmentPackages, setShipmentPackages] = React.useState([0]);
  const [manifiests, setManifiests] = React.useState([])
+  const printRef = React.useRef();
 
+  const handleDownloadPdf = async () => {
+    const element = printRef.current;
+    const canvas = await html2canvas(element);
+    const data = canvas.toDataURL('image/png');
+
+    const pdf = new jsPDF();
+    const imgProperties = pdf.getImageProperties(data);
+    const pdfWidth = pdf.internal.pageSize.getWidth();
+    const pdfHeight =
+      (imgProperties.height * pdfWidth) / imgProperties.width;
+
+    pdf.addImage(data, 'PNG', 0, 0, pdfWidth, pdfHeight);
+    pdf.save('print.pdf');
+  };
 
   const searchManifiests= async () => {
      let result = await getAll('manifiests');
@@ -146,7 +164,9 @@ const PackageList= ({city,xcapacity,scapacity,mcapacity}) => {
                     key={shipmentPackage.id}
                     secondaryAction={
                       <IconButton edge="end" aria-label="comments">
-                        <CommentIcon />
+                      <button type="button" onClick={handleDownloadPdf}>
+                        Download as PDF
+                      </button>
                       </IconButton>
                     }
                     disablePadding
@@ -163,7 +183,10 @@ const PackageList= ({city,xcapacity,scapacity,mcapacity}) => {
                           inputProps={{ 'aria-labelledby': labelId }}
                         />
                       </ListItemIcon>
-                      <ListItemText  key={labelIdTextBox} id={labelIdTextBox} primary={`Paquete ${shipmentPackage.id} Tamaño ${shipmentPackage.size} Tipo Normal Numero de orden ${shipmentPackage.orderNumber}`} />
+                      <div ref={printRef}>
+                          <Barcode value={`Informacion ${shipmentPackage.id} ${shipmentPackage.orderNumber} ${shipmentPackage.size}`}/>
+                      </div>
+                       <ListItemText  key={labelIdTextBox} id={labelIdTextBox} primary={`Paquete ${shipmentPackage.id} Tamaño ${shipmentPackage.size} Tipo Normal Numero de orden ${shipmentPackage.orderNumber}`} />
                     </ListItemButton>
                   </ListItem>
               )})}
